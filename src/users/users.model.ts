@@ -1,4 +1,6 @@
-import { Model, Column, DataType, Table, BelongsToMany } from "sequelize-typescript";
+import { Model, Column, DataType, Table, BelongsToMany, HasOne, BelongsTo, HasMany } from "sequelize-typescript";
+import { Post } from "src/posts/posts.model";
+import { Profile } from "src/profiles/profiles.model";
 import { Role } from "src/roles/roles.model";
 import { UserRoles } from "src/roles/user-roles.model";
 
@@ -28,4 +30,12 @@ export class User extends Model<User, UserCreationAttrs> {
   //таблицу UserRoles нужно создать
   @BelongsToMany (()=> Role, ()=> UserRoles)
   roles: Role[];
+
+//связь между таблицами Users и Profile (профилем пользователя), свзяь: "один-к-одному"
+  @HasOne(() => Profile)
+    profile: Profile;
+
+   
+  @HasMany(()=> Post)
+  posts: Post[]; 
 }
